@@ -6,9 +6,9 @@ function PeerConnectionCtrl($scope, peerConnection) {
 	};
 
 	$scope.create = function() {
-		$scope.pc = new peerConnection();
+		$scope.pc1 = new peerConnection();
 
-		$scope.pc.create();
+		$scope.pc1.create();
 	};
 
 	$scope.init();
