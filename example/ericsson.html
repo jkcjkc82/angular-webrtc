@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="app">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js"></script>	
+	<!--
+	<script src="http://localhost:3000/socket.io/socket.io.js"></script>   
+	-->
+	<script src="http://192.168.123.103:3000/socket.io/socket.io.js"></script>   
+	
+	<script src="common.js"></script>
+	<script src="ericsson.js?v71"></script>
+</head>
+<body>
+<div class="container" ng-controller="ericssonCtrl">
+	<h1>Calee Ericsson</h1>
+
+	<div>
+		<h2>video 1</h2>
+		<video id="v1" autoplay></video>
+	</div>	
+</div>	
+abc
+</body>
+</html>
+<!--
+<!doctype html>
+<html>
+   <head>
+      <title>Simple getUserMedia() test</title>
+      <script type="text/javascript">
+ 
+      window.onload = function () {
+         setTimeout(function () {
+            navigator.webkitGetUserMedia("audio, video", function (stream) {
+               document.getElementsByTagName("video")[0].src = window.webkitURL.createObjectURL(stream);
+            });
+            var pc = new PeerConnection();
+         }, 2000);
+      };
+      </script>
+   </head>
+   <body>
+      <video autoplay>
+   </body>
+</html>
+-->

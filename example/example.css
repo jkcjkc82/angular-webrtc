@@ -1,0 +1,7 @@
+video {width:100%;height:540px;display:block;}
+
+@media screen and (min-width: 1000px) {
+	video {
+		height: 540px;
+	}
+}

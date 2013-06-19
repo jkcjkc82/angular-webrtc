@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="mediastream">
+<head>
+<meta charset="utf-8">
+<title>Mediastream</title>
+<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+<script src="../../angular-webrtc-module.js"></script>
+
+<link rel="stylesheet" href="../example.css">
+<script src="mediastream.js"></script>
+</head>
+<body class="container-fluid" ng-controller="MediaStreamCtrl">
+    <h1>Mediastream</h1>
+
+    <video></video>
+    
+    <div>        
+        <button ng-click="pause()" ng-show="isPlay" class="btn btn-block btn-large">pause</button>
+        <button ng-click="play()" ng-hide="isPlay" class="btn btn-block btn-large btn-primary">play</button>
+    </div>
+    </div>
+</body>
+</html>
