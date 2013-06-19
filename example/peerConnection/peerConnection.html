@@ -12,6 +12,13 @@
 </head>
 <body class="container-fluid" ng-controller="PeerConnectionCtrl">
     <h1>PeerConnection</h1>
-    <button ng-click="create()">create</button>
+
+    <h2>peer1</h2>
+    <video id="v1" autoplay></video>
+
+    <h2>peer2</h2>
+    <video id="v2" autoplay></video>
+
+    <button ng-click="offer();">Offer</button>
 </body>
 </html>
