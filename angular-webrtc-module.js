@@ -1,3 +1,24 @@
+function WEBRTC_INIT() {
+	window.getUserMedia = null;
+	window.PeerConnection = null;
+
+	if(!window.URL ) window.URL={};
+	if(!window.URL.createObjectURL) {
+		window.URL.createObjectURL= function(obj) {
+			return obj;
+		}
+	}
+
+	if(navigator.mozGetUserMedia) {
+		window.getUserMedia = navigator.mozGetUserMedia.bind(navigator);
+		window.PeerConnection = mozRTCPeerConnection;
+	} else if(navigator.webkitGetUserMedia) {
+		window.getUserMedia = navigator.webkitGetUserMedia.bind(navigator);
+		window.PeerConnection = webkitRTCPeerConnection;
+	}	
+}
+WEBRTC_INIT();
+
 angular.module('webrtc-module', []).
 factory('peerConnection', function() {
 	var default_parameter = {
@@ -32,12 +53,7 @@ factory('peerConnection', function() {
 		return {
 			peer: null,
 			isFinishSignaling: 0,
-			PeerConnection: function() {
-				if(typeof mozRTCPeerConnection != "undefined") return mozRTCPeerConnection
-				return webkitRTCPeerConnection;
-			},
 			create: function() {
-				var PeerConnection = this.PeerConnection();	
 				this.peer = new PeerConnection(parameter.servers, parameter.configuration);
 
 				this.peer.onaddstream = parameter.onaddstream;
@@ -63,6 +79,7 @@ factory('peerConnection', function() {
 				this.peer.setRemoteDescription(description);
 			},
 			addIceCandidate: function(candidate) {
+				console.log("addIceCandidate",candidate);
 				this.peer.addIceCandidate(candidate);
 			},
 			addStream: function(stream) {
@@ -89,14 +106,8 @@ factory('peerConnection', function() {
 
 		return {
 			getUserMedia: function() {
-				if(!window.URL ) window.URL={};
-				if(!window.URL.createObjectURL) window.URL.createObjectURL= function(obj) {
-					return obj;
-				}
-
 				try {
-					navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-					navigator.getUserMedia(parameter.constraints, parameter.successCallback, parameter.errorCallback);
+					window.getUserMedia(parameter.constraints, parameter.successCallback, parameter.errorCallback);
 				} catch(e) {
 					parameter.notSupportCallback();
 				}
