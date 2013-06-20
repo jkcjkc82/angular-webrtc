@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="dataChannelApp">
+<head>
+<meta charset="utf-8">
+<title>dataChannel</title>
+<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+
+<script src="../../angular-webrtc-module.js"></script>
+<script src="../../angular-webrtc-socket-module.js"></script>
+
+<link rel="stylesheet" href="../example.css">
+<script src="dataChannel.js"></script>
+</head>
+<body class="container-fluid" ng-controller="DataChannelCtrl">
+    <h1>dataChannel</h1>
+
+    <button ng-click="offer();">Offer</button>
+    <button ng-click="send();">Send</button>
+</body>
+</html>

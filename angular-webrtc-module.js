@@ -1,13 +1,15 @@
 angular.module('webrtc-module', []).
-factory('peerConnection', function() {	
+factory('peerConnection', function() {
 	var default_parameter = {
 		onicecandidate: function(e) {},
 		onaddstream: function(e) {},
 		onremovestream: function(e) {},
 		ondatachannel: function(e) {},
 		onconnection: function(e) {},
-		offerCallback: function(description) {},
+		offerCallback: function() {},
+		offerErrorCallback: function() {},
 		answerCallback: function(description) {},
+		answerErrorCallback: function() {},
 		servers: {
 			iceServers:[{
 				url:"stun:stun.l.google111.com:19302"						
@@ -15,6 +17,12 @@ factory('peerConnection', function() {
 		},
 		configuration: {
 			optional: [{'DtlsSrtpKeyAgreement': true}, {'RtpDataChannels': true }]
+		},
+		sdp_opt: { 
+			'mandatory': {
+				'OfferToReceiveAudio': true, 
+				'OfferToReceiveVideo': true
+			}
 		}
 	};
 
@@ -24,8 +32,12 @@ factory('peerConnection', function() {
 		return {
 			peer: null,
 			isFinishSignaling: 0,
+			PeerConnection: function() {
+				if(typeof mozRTCPeerConnection != "undefined") return mozRTCPeerConnection
+				return webkitRTCPeerConnection;
+			},
 			create: function() {
-				var PeerConnection = typeof webkitRTCPeerConnection != "undefined" ? webkitRTCPeerConnection : mozRTCPeerConnection;				
+				var PeerConnection = this.PeerConnection();	
 				this.peer = new PeerConnection(parameter.servers, parameter.configuration);
 
 				this.peer.onaddstream = parameter.onaddstream;
@@ -37,15 +49,17 @@ factory('peerConnection', function() {
 			offer: function(callback) {
 				this.peer.createOffer(function(description) {
 					parameter.offerCallback(description);
-				});
+				},parameter.offerErrorCallback, parameter.sdp_opt);
 			},
-			answer: function(description) {
-				this.peer.createAnswer(parameter.answerCallback);
+			answer: function() {
+				this.peer.createAnswer(parameter.answerCallback, parameter.answerErrorCallback, parameter.sdp_opt);
 			},
 			setLocalDescription: function(description) {
+				console.log("setLocalDescription",description);
 				this.peer.setLocalDescription(description);
 			},
 			setRemoteDescription: function(description) {
+				console.log("setRemoteDescription",description);
 				this.peer.setRemoteDescription(description);
 			},
 			addIceCandidate: function(candidate) {
@@ -66,7 +80,8 @@ factory('peerConnection', function() {
 			"video": true
 		},
 		successCallback: function(stream) {},
-		errorCallback: function(error) {}
+		errorCallback: function(error) {},
+		notSupportCallback: function() {alert("This browser is not supported to getUserMedia in WebRTC.");}
 	};
 
 	return function(parameter) {
@@ -74,11 +89,41 @@ factory('peerConnection', function() {
 
 		return {
 			getUserMedia: function() {
-				navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-				navigator.getUserMedia(parameter.constraints, parameter.successCallback, parameter.errorCallback);
+				if(!window.URL ) window.URL={};
+				if(!window.URL.createObjectURL) window.URL.createObjectURL= function(obj) {
+					return obj;
+				}
+
+				try {
+					navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+					navigator.getUserMedia(parameter.constraints, parameter.successCallback, parameter.errorCallback);
+				} catch(e) {
+					parameter.notSupportCallback();
+				}
 			}
 		};
 	};
+}).factory('dataChannel', function() {
+	var default_parameter = {
+		label: "labelName",
+		opt: { reliable:false },
+		onmessage: function(e) {}
+	};
+
+	return function(parameter) {
+		parameter = angular.extend(angular.extend({}, default_parameter), parameter);
+
+		return {
+			peer_connection: null,
+			data_channel: null,
+			create: function() {
+				this.peer_connection = parameter.peer_connection;
+				this.data_channel = this.peer_connection.peer.createDataChannel(parameter.label, parameter.opt);
+				this.data_channel.onmessage = parameter.onmessage;
+			},
+			send: function(data) {
+				this.data_channel.send(data);
+			}
+		};
+	};	
 });
-
-

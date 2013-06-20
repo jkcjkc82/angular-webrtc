@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="peer-connection-socket">
+<head>
+<meta charset="utf-8">
+<title>PeerConnection with Socket</title>
+<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+
+<script src="../../angular-webrtc-module.js"></script>
+<script src="../../angular-webrtc-socket-module.js"></script>
+
+<link rel="stylesheet" href="../example.css">
+<script src="peerConnectionSocket.js"></script>
+</head>
+<body class="container-fluid" ng-controller="PeerConnectionSocketCtrl">
+    <h1>PeerConnection with Socket</h1>
+
+    <h2>My View</h2>
+    <video id="v1" autoplay></video>
+
+    <h2>Other View</h2>
+    <video id="v2" autoplay></video>
+
+    <button ng-click="offer();">Offer</button>
+</body>
+</html>

@@ -20,6 +20,7 @@ function PeerConnectionCtrl($scope, mediastream, peerConnection) {
 				$scope.pc2.addIceCandidate(e.candidate);
 			},
 			onaddstream: function(e) {
+				console.log("onaddstream");
 				$scope.v1.src = window.URL.createObjectURL(e.stream);
 			}
 		});
@@ -39,6 +40,7 @@ function PeerConnectionCtrl($scope, mediastream, peerConnection) {
 				$scope.pc1.addIceCandidate(e.candidate);
 			},
 			onaddstream: function(e) {
+				console.log("onaddstream");
 				$scope.v2.src = window.URL.createObjectURL(e.stream);
 			}
 		});		
