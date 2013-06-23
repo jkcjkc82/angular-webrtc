@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js"></script>	
+	<script src="index.js"></script>
+</head>
+<body ng-controller="IndexCtrl">
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="brand" href="./index.html">WebRTC Examples</a>
+		</div>
+	</div>
+
+	<div class="container">
+		<h3>WebRTC API Examples</h3>
+
+		<ul>
+			<li ng-repeat="lnk in arrLink"><a href="{{lnk.url}}">{{lnk.title}}</a></li>
+		</ul>
+	</div>
+</div>	
+</body>
+</html>
