@@ -32,13 +32,13 @@ function MediaStreamCtrl($scope, mediastream) {
 	};
 
 	$scope.take = function() {
-    	var photo = document.getElementsByTagName('canvas')[0];
-        var context = photo.getContext('2d');
- 
-	    photo.width = $scope.video.clientWidth;
-	    photo.height = $scope.video.clientHeight;
+	    	var photo = document.getElementsByTagName('canvas')[0];
+	        	var context = photo.getContext('2d');
 	 
-	    context.drawImage($scope.video, 0, 0, photo.width, photo.height);		
+		photo.width = $scope.video.clientWidth;
+		photo.height = $scope.video.clientHeight;
+		 
+		context.drawImage($scope.video, 0, 0, photo.width, photo.height);		
 	};
 
 	$scope.init();

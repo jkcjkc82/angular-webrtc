@@ -1,3 +1,10 @@
+/**
+ * @doc module
+ * @name webrt_init
+ * @description WEBRTC 초기화
+ * 
+ * 
+ */
 function WEBRTC_INIT() {
 	window.getUserMedia = null;
 	window.PeerConnection = null;
@@ -89,7 +96,7 @@ factory('peerConnection', function() {
 				this.isFinishSignaling = 1;
 			}
 		}
-	}	
+	}
 }).factory('mediastream', function() {
 	var default_parameter = {
 		constraints: {
