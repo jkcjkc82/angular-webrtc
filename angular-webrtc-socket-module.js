@@ -1,31 +1,11 @@
 /**
  * @doc module
- * @name websocket
- * @description 웹소켓
- * 
- * 
+ * @name WebrtcSocket
+ * @description
+ * WebRTC 시그널링을 하기 위한 웹소켓 모듈
  */
-
-
 angular.module('webrtc-socket-module', []).
 factory('WebrtcSocket', function() {
-	/**
-	 * @doc function
-	 * @name utils.global:makeCooler
-	 * @param  {string} string_in any ol' string
-	 * @return {string} adds on the 'izzle'
-	 * @description
-	 * Man this function is the functionizzle of the heezy for sheezy.
-	 *
-	 * In fact, sometimes I like to use it to coolify everything
-	 * ```js
-	 * for(var thing in window) {
-	 *     if(typeof(window[thing]) === "string") {
-	 *         window[thing] = util.makeCooler(window[thing]);
-	 *     }
-	 * }
-	 * ```
-	 */	
 	var default_parameter = {
 		socket_server: "'http://localhost:3000'",
 		onConnect: function() {},
@@ -41,6 +21,7 @@ factory('WebrtcSocket', function() {
 		return {
 			peer: null,
 			socket: null,
+	
 			RTCSessionDescription: function() {
 				if(typeof mozRTCSessionDescription != "undefined") return mozRTCSessionDescription
 				return RTCSessionDescription;
@@ -49,6 +30,12 @@ factory('WebrtcSocket', function() {
 				if(typeof mozRTCIceCandidate != "undefined") return mozRTCIceCandidate
 				return RTCIceCandidate;
 			},
+			/**
+			 * @doc function
+			 * @name WebrtcSocket.connect
+			 * @methodOf WebrtcSocket
+			 * @description 소켓 연결하기
+			 */			
 			connect: function() {
 				var that = this;
 

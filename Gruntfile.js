@@ -4,19 +4,26 @@ module.exports = function(grunt) {
         docular: {
             groups: [
                 {
-                    groupTitle: "WebRTC Module",
-                    groupId: "AngularWebRTCModule",
+                    groupTitle: "angular webrtc APIs",
+                    groupId: "angular-webrtc-apis",
                     groupIcon: "icon-beer",                    
                     sections: [
                         {
-                            id: "AngularWebRTCModule",
-                            title: "AngularWebRTCModule",
-                            // showSource : true,
+                            id: "angular-webrtc",
+                            title: "Angular WebRTC",
                             scripts: [
-                                "angular-webrtc-module.js",
+                                "angular-webrtc-module.js"
+                            ],
+                            showSource : true
+                        },
+                        {
+                            id: "angular-webrtc-socket",
+                            title: "Angular WebRTC Socket",
+                            scripts: [
                                 "angular-webrtc-socket-module.js"
-                            ]
-                        }
+                            ],
+                            showSource : true
+                        },                        
                     ]
                 }
             ]            
