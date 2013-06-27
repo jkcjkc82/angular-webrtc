@@ -4,6 +4,7 @@ angular.module('dataChannelApp', ['webrtc-module','webrtc-socket-module']).confi
 function DataChannelCtrl($scope, WebrtcSocket, peerConnection, dataChannel) {
 	$scope.init = function() {
 		$scope.sock = WebrtcSocket({
+			socket_server: "http://webrtc.kichul.co.kr:3000",
 			onConnect: function() {
 				$scope.sock.joinRoom();		
 			},

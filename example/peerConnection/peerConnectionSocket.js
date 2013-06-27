@@ -4,6 +4,7 @@ angular.module('peer-connection-socket', ['webrtc-module','webrtc-socket-module'
 function PeerConnectionSocketCtrl($scope, mediastream, peerConnection, WebrtcSocket) {
 	$scope.init = function() {
 		$scope.sock = WebrtcSocket({
+			socket_server: "http://webrtc.kichul.co.kr:3000",
 			onConnect: function() {
 				$scope.sock.joinRoom();		
 			},
