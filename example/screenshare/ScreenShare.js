@@ -1,8 +1,8 @@
-angular.module('dataChannelApp', ['webrtc-module','webrtc-socket-module']).config(function() {
+angular.module('peer-connection-socket', ['webrtc-module','webrtc-socket-module']).config(function() {
 });
 
-function DataChannelCtrl($scope, WebrtcSocket, peerConnection, dataChannel) {
-	$scope.init = function() {
+function PeerConnectionSocketCtrl($scope, mediastream, peerConnection, WebrtcSocket) {
+	$scope.init = function() {		
 		$scope.sock = WebrtcSocket({
 			socket_server: "http://webrtc.kichul.co.kr:3000",
 			onConnect: function() {
@@ -17,11 +17,19 @@ function DataChannelCtrl($scope, WebrtcSocket, peerConnection, dataChannel) {
 				$scope.pc.finishSignaling();				
 			},
 			receiveCandidateallback: function(candidate) {
-				$scope.pc.addIceCandidate(candidate)
+				$scope.pc.addIceCandidate(candidate);
 			},
-		});	
+		});		
+
+		$scope.v1 = document.querySelector("#v1");
+		$scope.v2 = document.querySelector("#v2");
 
 		$scope.pc = peerConnection({
+			// servers: {
+			// 	iceServers:[{
+			// 		url:"stun:kichul.co.kr:3478"						
+			// 	}]
+			// },			
 			offerCallback: function(description) {
 				$scope.pc.setLocalDescription(description);
 
@@ -34,34 +42,44 @@ function DataChannelCtrl($scope, WebrtcSocket, peerConnection, dataChannel) {
 				$scope.sock.returnSDP(description);
 			},
 			onicecandidate: function(e) {
+				console.log(e);
 				if(!e.candidate) {
-					$scope.sock.disconnect();					
+					$scope.sock.disconnect();
 					return;	
 				}
 				if(!$scope.pc.isFinishSignaling) return;
 				
 				$scope.sock.sendCandidate(e.candidate);
+			},
+			onaddstream: function(e) {
+				$scope.v2.src = window.URL.createObjectURL(e.stream);
 			}
 		});
 
-		$scope.dc = dataChannel({
-			peer_connection: $scope.pc,
-			onmessage: function(e) {
-				console.log(e.data);
+		$scope.media = mediastream({
+			constraints: {
+			    video: {
+			      mandatory: {
+			        chromeMediaSource: 'screen'
+			      },
+			      optional:[{minHeight:720}, {minWidth:960}]
+			    }
+			},
+			successCallback: function(stream) {
+				// $scope.v1.src = window.URL.createObjectURL(stream);
+				$scope.pc.addStream(stream);
+			},errorCallback: function(error) {
+				console.log(error);
 			}
-		});	
+		});
 
-		$scope.pc.create();		
-		$scope.dc.create();
-		$scope.sock.connect();					
+		$scope.media.getUserMedia();
+		$scope.pc.create();
+		$scope.sock.connect();
 	};
 
 	$scope.offer = function() {
 		$scope.pc.offer();
-	};
-
-	$scope.send = function() {
-		$scope.dc.send("hello world");
 	};
 
 	$scope.init();

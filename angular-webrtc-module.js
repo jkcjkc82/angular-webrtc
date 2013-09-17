@@ -173,6 +173,7 @@ factory('peerConnection', function() {
 			 */				
 			getUserMedia: function() {
 				try {
+					console.log(parameter.constraints);
 					window.getUserMedia(parameter.constraints, parameter.successCallback, parameter.errorCallback);
 				} catch(e) {
 					parameter.notSupportCallback();

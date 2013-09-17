@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko" ng-app="dataChannelApp">
+<html lang="ko" ng-app="peer-connection-socket">
 <head>
 <meta charset="utf-8">
-<title>dataChannel</title>
+<title>ScreenShare with Socket</title>
 <link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
 
@@ -12,12 +12,17 @@
 <script src="../../angular-webrtc-socket-module.js"></script>
 
 <link rel="stylesheet" href="../example.css">
-<script src="dataChannel.js"></script>
+<script src="ScreenShare.js"></script>
 </head>
-<body class="container-fluid" ng-controller="DataChannelCtrl">
-    <h1>dataChannel</h1>
+<body class="container-fluid" ng-controller="PeerConnectionSocketCtrl">
+    <h1>ScreenShare with Socket</h1>
+
+    <h2>My View</h2>
+    <video id="v1" autoplay style="width:1024px"></video>
+
+    <h2>Other View</h2>
+    <video id="v2" autoplay style="width:1024px"></video>
 
     <button ng-click="offer();">Offer</button>
-    <button ng-click="send();">Send</button>
 </body>
 </html>
